@@ -17,14 +17,13 @@ services:
       timeout: 5s
       retries: 5
 
-  # TODO: Раскомментируйте после создания Dockerfile
-  # app:
-  #   build: .
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     DATABASE_URL: postgres://user:pass@db:5432/finops?sslmode=disable
-  #     PORT: 8080
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://user:pass@db:5432/finops?sslmode=disable
+      PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy

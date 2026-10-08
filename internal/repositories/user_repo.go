@@ -17,11 +17,18 @@ func NewUserRepo(pool *pgxpool.Pool) *UserRepo {
 }
 
 func (r *UserRepo) GetBalance(ctx context.Context, userID int) (decimal.Decimal, error) {
-	// TODO: Реализовать получение баланса пользователя
-	return decimal.Zero, nil
+	var balance decimal.Decimal
+	err := r.pool.QueryRow(ctx, "SELECT balance FROM users WHERE id = $1", userID).Scan(&balance)
+	if err != nil {
+		return decimal.Zero, err
+	}
+	return balance, nil
 }
 
 func (r *UserRepo) UpdateBalance(ctx context.Context, userID int, amount decimal.Decimal, tx pgx.Tx) error {
-	// TODO: Реализовать обновление баланса пользователя
+	_, err := tx.Exec(ctx, "UPDATE users SET balance = $1 WHERE id = $2", amount, userID)
+	if err != nil {
+		return err
+	}
 	return nil
 }

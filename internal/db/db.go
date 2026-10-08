@@ -7,6 +7,14 @@ import (
 )
 
 func NewPool(dsn string) (*pgxpool.Pool, error) {
-	// TODO: Реализовать создание пула подключений
-	return nil, nil
+	pool, err := pgxpool.New(context.Background(), dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := pool.Ping(context.Background()); err != nil {
+		return nil, err
+	}
+
+	return pool, nil
 }

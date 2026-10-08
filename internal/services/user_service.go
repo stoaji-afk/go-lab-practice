@@ -16,6 +16,5 @@ func NewUserService(userRepo repositories.UserRepository) *UserService {
 }
 
 func (s *UserService) GetBalance(ctx context.Context, userID int) (decimal.Decimal, error) {
-	// TODO: Реализовать получение баланса пользователя
-	return decimal.Zero, nil
+	return s.userRepo.GetBalance(ctx, userID)
 }
